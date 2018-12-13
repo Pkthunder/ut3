@@ -1,0 +1,24 @@
+{
+  "name": "ut3-server",
+  "version": "1.0.0",
+  "description": "The backend for Ultimate Tic-Tac-Toe",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jared Perreault <jared_perreault@yahoo.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.5.3",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "moment": "^2.22.2",
+    "morgan": "^1.9.1",
+    "sharedb": "^1.0.0-beta.17",
+    "shortid": "^2.2.14",
+    "websocket-json-stream": "0.0.3",
+    "winston": "^3.1.0",
+    "ws": "^6.1.2"
+  }
+}
