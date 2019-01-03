@@ -31,12 +31,11 @@ class Game extends PureComponent {
     }
   }
 
+  // TODO: [Jan 3] - clicking on one cell changes that value for all games (fix this)
   handleTileClick (gr, gc, br, bc) {
     // returns a function, which calls setState
     return () => {
       this.setState(prev => {
-
-        console.log(prev);
         console.log(gr, gc, br, bc);
 
         prev.board[gr][gc].board[br][bc].value = this.state.turn.slice();
@@ -45,10 +44,8 @@ class Game extends PureComponent {
 
         const nextTurn = prev.turn === 'X' ? 'O' : 'X';
 
-        return Object.assign({}, {board: prev.board, turn: nextTurn});
+        return Object.assign({}, {board: [...prev.board], turn: nextTurn});
       });
-
-      this.forceUpdate();
     }
   }
 

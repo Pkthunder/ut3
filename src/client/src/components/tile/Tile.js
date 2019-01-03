@@ -1,13 +1,9 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Icon } from 'semantic-ui-react';
 
 import './Tile.css';
 
-class Tile extends PureComponent {
-  componentDidUpdate (prevProps) {
-    console.log('updated!');
-  }
-
+class Tile extends Component {
   renderTileValue () {
     const { tile } = this.props;
 
@@ -30,8 +26,6 @@ class Tile extends PureComponent {
 
   render () {
     const { row, cell } = this.props;
-
-    console.log('tile.render', this.props.tile);
 
     return (
       <div>

@@ -1,15 +1,14 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Grid } from 'semantic-ui-react';
 
 import { Tile } from '../tile';
 
 import './Board.css';
 
-class Board extends PureComponent {
+class Board extends Component {
 
   renderRow (row, idx) {
     const handleTileClick = (row, cell) => {
-      console.log('clicked!!!!');
       return this.props.onTileClick(this.props.row, this.props.cell, row, cell);
     };
 
@@ -26,8 +25,6 @@ class Board extends PureComponent {
 
   render () {
     const { game } = this.props;
-
-    console.log('board.render', game.board);
 
     return (
       <div className="board-container">
