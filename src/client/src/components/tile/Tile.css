@@ -1,0 +1,9 @@
+span.tile-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-left: 2px;
+    font-size: xx-small;
+    text-align: left;
+    color: grey;
+}
