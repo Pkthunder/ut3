@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Icon } from 'semantic-ui-react';
 
+import * as utils from '../utils';
+
 import './Tile.css';
 
 class Tile extends Component {
@@ -11,17 +13,22 @@ class Tile extends Component {
 
     switch (tile.value) {
       case 'X':
-        icon = {name: 'times', color: 'red'};
+        icon = 'times';
         break;
       case 'O':
-        icon = {name: 'circle outline', color: 'green'};
+        icon = 'circle outline';
         break;
       default:
         icon = null;
         break;
     }
 
-    return icon ? (<Icon {...icon} size='big' />) : '';
+    return icon ? (
+      <Icon
+        name={icon}
+        color={utils.getColorFromPlayer(tile.value)}
+        size='big'
+      />) : '';
   }
 
   render () {

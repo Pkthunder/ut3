@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Card, Button } from 'semantic-ui-react';
+import { withRouter } from "react-router-dom";
 import _ from 'lodash';
 
 import { Board } from '../board';
@@ -15,11 +16,20 @@ class Game extends PureComponent {
     this.state = {
       game: _.cloneDeep(utils.DEFAULT_BOARD),
       turn: 'X'
-    }
+    };
   }
 
-  handleSubGameComplete (winner) {
-    // TODO: implement this function
+  handleSubGameComplete (winner, row, col) {
+    console.log('WINNER! ', winner);
+
+    const game = _.cloneDeep(this.state.game);
+    const subGame = game[row][col];
+
+    console.log('subGame: ', subGame);
+
+    Object.assign(subGame, {winner: winner});
+
+    this.setState({game: [...game]});
   }
 
   handleTileClick () {
@@ -28,30 +38,61 @@ class Game extends PureComponent {
     this.setState({turn: nextTurn});
   }
 
+  handleResetGame () {
+    window.location.reload();
+  }
 
   renderRow (row, idx) {
     const { turn } = this.state;
 
     return (
-      <Grid.Row columns={row.length} key={`row-${idx}`}>
+      <Grid.Row columns={row.length} key={`game-row-${idx}`}>
         { row.map((game, column) => (
-          <Grid.Column key={`tile-${column}`}>
-            <Board
-              game={game}
-              row={idx}
-              column={column}
-              turn={turn}
-              onTileClick={this.handleTileClick.bind(this)}
-              onSubGameComplete={this.handleSubGameComplete.bind(this)}
-            />
-          </Grid.Column>
+          <Grid.Column
+            key={`game-col-${column}`}
+            textAlign="center"
+            verticalAlign="middle"
+            children={(
+              <Board
+                game={game}
+                row={idx}
+                column={column}
+                turn={turn}
+                onTileClick={this.handleTileClick.bind(this)}
+                onSubGameComplete={this.handleSubGameComplete.bind(this)}
+              />
+            )}
+          />
         )) }
       </Grid.Row>
     );
   }
 
+  renderGameControls () {
+    const { turn } = this.state;
+    const color = utils.getColorFromPlayer(turn);
+
+    return (
+      <Card fluid color={color}>
+        <Card.Content>
+          <Card.Header>
+            Currently <code>{turn}</code>'s turn
+          </Card.Header>
+          <Card.Description>
+            <Button onClick={this.handleResetGame.bind(this)}>
+              Reset Game
+            </Button>
+          </Card.Description>
+        </Card.Content>
+        <Card.Content extra>
+          <p>Advertisement!!!!!</p>
+        </Card.Content>
+      </Card>
+    );
+  }
+
   render () {
-    const { game, turn } = this.state;
+    const { game } = this.state;
 
     return (
       <div className="game-container">
@@ -59,10 +100,10 @@ class Game extends PureComponent {
         <Grid celled="internally">
           { game.map((row, idx) => this.renderRow(row, idx)) }
         </Grid>
-        <p>Currently {turn}'s turn</p>
+        {this.renderGameControls()}
       </div>
     );
   }
 }
 
-export default Game;
+export default withRouter(Game);
