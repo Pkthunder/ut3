@@ -1,3 +1,7 @@
+.tile {
+    min-height: 35px;
+}
+
 span.tile-label {
     position: absolute;
     top: 0;

@@ -25,11 +25,11 @@ class Tile extends Component {
   }
 
   render () {
-    const { row, cell } = this.props;
+    const { row, column } = this.props;
 
     return (
-      <div>
-        <span className="tile-label">{row},{cell}</span>
+      <div className="tile">
+        <span className="tile-label">{row},{column}</span>
         <p>{this.renderTileValue()}</p>
       </div>
     );
