@@ -18,7 +18,7 @@ class Game extends PureComponent {
       game: _.cloneDeep(utils.DEFAULT_BOARD),
       gamesComplete: 0,
       turn: 'X',
-      winner: 'X'
+      winner: ''
     };
   }
 
