@@ -1,5 +1,13 @@
 .board-container {
     width: 90%;
+    min-height: 200px;
     text-align: center;
     margin: 0 auto;
+}
+
+.board-container p {
+    margin: 0;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
 }

@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import _ from 'lodash';
 
 import { Board } from '../board';
+import GameOverModal from '../shared/GameOverModal';
 
 import * as utils from '../utils';
 
@@ -15,21 +16,33 @@ class Game extends PureComponent {
 
     this.state = {
       game: _.cloneDeep(utils.DEFAULT_BOARD),
-      turn: 'X'
+      gamesComplete: 0,
+      turn: 'X',
+      winner: 'X'
     };
   }
 
-  handleSubGameComplete (winner, row, col) {
-    console.log('WINNER! ', winner);
+  componentDidUpdate(prevProps, prevState) {
+    const { game, gamesComplete } = this.state;
 
+    if (gamesComplete >= 3) {
+      const winner = utils.checkBoardForWinner(game, 'winner');
+
+      console.log(`Player ${winner} has won!`);
+
+      if (winner && !this.state.winner) {
+        this.setState({winner: winner});
+      }
+    }
+  }
+
+  handleSubGameComplete (winner, row, col) {
     const game = _.cloneDeep(this.state.game);
     const subGame = game[row][col];
 
-    console.log('subGame: ', subGame);
-
     Object.assign(subGame, {winner: winner});
 
-    this.setState({game: [...game]});
+    this.setState({game: [...game], gamesComplete: this.state.gamesComplete + 1});
   }
 
   handleTileClick () {
@@ -92,11 +105,12 @@ class Game extends PureComponent {
   }
 
   render () {
-    const { game } = this.state;
+    const { game, winner } = this.state;
 
     return (
       <div className="game-container">
         <h1>Ultimate Tic-Tac-Toe</h1>
+        <GameOverModal open={!!winner} winner={winner}/>
         <Grid celled="internally">
           { game.map((row, idx) => this.renderRow(row, idx)) }
         </Grid>

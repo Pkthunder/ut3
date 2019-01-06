@@ -47,8 +47,6 @@ class Board extends Component {
   }
 
   renderRow (row, idx) {
-    const { winner } = this.props.game;
-
     return (
       <Grid.Row columns={row.length} key={`tile-row-${idx}`}>
         { row.map((tile, column) => (
@@ -66,12 +64,13 @@ class Board extends Component {
 
   render () {
     const { board } = this.state;
+    const { winner } = this.props.game;
 
     // TODO: overlay this if sub game has been won, don't replace game board
-    if (this.props.game.winner) {
+    if (winner) {
       let icon = null;
 
-      switch (this.props.game.winner) {
+      switch (winner) {
         case 'X':
           icon = {name: 'times', color: 'red'};
           break;
@@ -83,7 +82,11 @@ class Board extends Component {
           break;
       }
 
-      return icon ? (<Icon {...icon} size='huge' />) : '';
+      return icon ? (
+        <div className="board-container">
+          <p><Icon {...icon} size='huge' /></p>
+        </div>
+      ) : '';
     }
 
     return (
